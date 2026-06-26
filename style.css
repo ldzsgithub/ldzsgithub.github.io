@@ -1,0 +1,463 @@
+/* ============================================
+   《易经》六十四卦速查 — 四栏布局
+   左：卦爻 | 中上：辞 | 中下：十翼 | 右：解释
+   ============================================ */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-primary: #f7f3ec;
+  --bg-secondary: #ede5d3;
+  --bg-card: #fffdf8;
+  --bg-hover: #f0e8d8;
+  --bg-active: #e8dcc4;
+  --color-ink: #2a2420;
+  --color-ink-light: #5a4e42;
+  --color-ink-muted: #8a7e6e;
+  --color-vermilion: #c0392b;
+  --color-vermilion-dark: #962d22;
+  --color-gold: #b8860b;
+  --color-gold-light: #d4a843;
+  --color-jade: #4a7c59;
+  --color-jade-bg: #f0f5f2;
+  --border-color: #d4c9b5;
+  --border-light: #e5dcc8;
+  --shadow-md: 0 4px 12px rgba(42,36,32,0.12);
+  --radius: 8px;
+  --radius-sm: 4px;
+  --radius-lg: 12px;
+  --font-serif: "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
+  --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --transition: 0.2s ease;
+  --yao-total-w: 100px;
+  --yao-gap: 10px;
+  --yao-bar-w: calc((var(--yao-total-w) - var(--yao-gap)) / 2);
+}
+
+html, body {
+  height: 100vh;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-primary);
+  color: var(--color-ink);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- 标题栏 ---- */
+.top-bar {
+  padding: 6px 16px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+
+.top-bar h1 {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.top-bar h1 .book-title { color: var(--color-vermilion); }
+
+/* ---- 上经/下经 ---- */
+.jing-tabs {
+  display: flex;
+  padding: 0 16px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+
+.jing-tab {
+  flex: 1;
+  padding: 5px 0;
+  border: none;
+  background: transparent;
+  font-family: var(--font-serif);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-ink-muted);
+  cursor: pointer;
+  transition: var(--transition);
+  border-bottom: 2px solid transparent;
+}
+
+.jing-tab:hover { color: var(--color-ink-light); }
+
+.jing-tab.active {
+  color: var(--color-vermilion);
+  border-bottom-color: var(--color-vermilion);
+}
+
+/* ---- 卦象网格 ---- */
+.hexagram-grid-wrap {
+  padding: 4px 16px 6px;
+  border-bottom: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+
+.hexagram-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  gap: 3px;
+}
+
+.hex-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 2px 3px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+  user-select: none;
+}
+
+.hex-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--color-gold-light);
+}
+
+.hex-btn.active {
+  background: var(--bg-active);
+  border-color: var(--color-vermilion);
+}
+
+.hex-btn .hex-num {
+  font-size: 0.5rem;
+  color: var(--color-ink-muted);
+  line-height: 1;
+}
+
+.hex-btn .hex-name {
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  line-height: 1.2;
+}
+
+.hex-btn.active .hex-name { color: var(--color-vermilion); }
+
+/* ---- 主内容区 ---- */
+.main-content {
+  flex: 1;
+  overflow: hidden;
+  padding: 8px 16px;
+}
+
+/* ---- 四栏布局 ---- */
+.hex-detail {
+  display: grid;
+  grid-template-columns: 180px minmax(180px, 1fr) minmax(200px, 1.2fr) minmax(180px, 1fr);
+  grid-template-rows: 1fr 1fr;
+  gap: 0;
+  height: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 12px;
+  box-shadow: var(--shadow-md);
+}
+
+/* ---- 左栏：卦爻 ---- */
+.hex-visual {
+  grid-row: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-right: 1px solid var(--border-light);
+  padding: 8px 10px;
+}
+
+.hex-symbol-area {
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.hex-symbol-area:hover { background: rgba(184,134,11,0.06); }
+.hex-symbol-area.selected { background: rgba(192,57,43,0.08); }
+
+.hex-unicode {
+  font-size: 2rem;
+  color: var(--color-ink);
+  line-height: 1;
+}
+
+.hex-name-large {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-ink);
+  letter-spacing: 0.08em;
+}
+
+.hex-symbol-area.selected .hex-name-large {
+  color: var(--color-vermilion);
+}
+
+.hex-fullname {
+  font-size: 0.65rem;
+  color: var(--color-ink-muted);
+}
+
+.hex-meta-inline {
+  font-size: 0.58rem;
+  color: var(--color-ink-muted);
+  margin-top: 1px;
+}
+
+/* ---- 爻线 ---- */
+.yao-container {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 4px;
+  padding: 6px 4px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  width: 100%;
+}
+
+.yao-line {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 3px 4px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  gap: 6px;
+}
+
+.yao-line:hover { background: rgba(184,134,11,0.1); }
+.yao-line.selected { background: rgba(192,57,43,0.1); }
+
+.yao-line .yao-label {
+  font-family: var(--font-serif);
+  font-size: 0.68rem;
+  color: var(--color-ink-light);
+  min-width: 24px;
+  text-align: right;
+}
+
+.yao-line.selected .yao-label {
+  color: var(--color-vermilion);
+  font-weight: 600;
+}
+
+/* 爻线条：统一总宽度 */
+.yao-line .yao-bar {
+  display: flex;
+  align-items: center;
+  width: var(--yao-total-w);
+  gap: var(--yao-gap);
+  justify-content: center;
+}
+
+.yao-line .yao-bar .bar {
+  height: 7px;
+  background: var(--color-ink);
+  border-radius: 1px;
+  transition: var(--transition);
+}
+
+/* 阳爻：整条 */
+.yao-line.yang .yao-bar .bar { width: var(--yao-total-w); }
+
+/* 阴爻：断开，总长等于阳爻 */
+.yao-line.yin .yao-bar .bar { width: var(--yao-bar-w); }
+
+.yao-line.selected .yao-bar .bar { background: var(--color-vermilion); }
+
+.yao-extra-sep {
+  border-top: 1px dashed var(--border-color);
+  margin: 2px 6px;
+}
+
+.yao-line.extra-yao .yao-bar .bar { background: var(--color-gold); }
+.yao-line.extra-yao.selected .yao-bar .bar { background: var(--color-vermilion-dark); }
+.yao-line.extra-yao .yao-label { color: var(--color-gold); }
+.yao-line.extra-yao.selected .yao-label { color: var(--color-vermilion-dark); font-weight: 600; }
+
+/* ---- 中上：辞 ---- */
+.content-panel {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 10px;
+  overflow-y: auto;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.content-title {
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-vermilion);
+}
+
+.content-text {
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  color: var(--color-ink);
+  line-height: 1.6;
+  padding: 8px 10px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+}
+
+.content-empty {
+  text-align: center;
+  color: var(--color-ink-muted);
+  font-size: 0.78rem;
+  padding: 16px 0;
+}
+
+/* ---- 中下：十翼关联 ---- */
+.shiyi-panel {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 10px;
+  overflow-y: auto;
+}
+
+.shiyi-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  border: 1px solid var(--border-light);
+  background: var(--bg-card);
+}
+
+.shiyi-section:hover { background: var(--bg-hover); }
+.shiyi-section.selected { background: rgba(192,57,43,0.06); border-color: var(--color-vermilion); }
+
+.shiyi-section.selected.shiyi-daxiang { border-color: var(--color-jade); background: rgba(74,124,89,0.06); }
+.shiyi-section.selected.shiyi-wenyan { border-color: var(--color-gold); background: rgba(184,134,11,0.06); }
+
+.shiyi-section .shiyi-label {
+  font-size: 0.58rem;
+  color: var(--color-ink-muted);
+  letter-spacing: 0.08em;
+}
+
+.shiyi-section.selected .shiyi-label { color: var(--color-vermilion); }
+.shiyi-section.selected.shiyi-daxiang .shiyi-label { color: var(--color-jade); }
+.shiyi-section.selected.shiyi-wenyan .shiyi-label { color: var(--color-gold); }
+
+.shiyi-section .shiyi-text {
+  font-family: var(--font-serif);
+  font-size: 0.78rem;
+  color: var(--color-ink-light);
+  line-height: 1.5;
+}
+
+.shiyi-section.selected .shiyi-text { color: var(--color-ink); }
+
+/* ---- 右栏：解释 ---- */
+.explain-panel {
+  grid-column: 3 / 5;
+  grid-row: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 12px;
+  overflow-y: auto;
+  border-left: 1px solid var(--border-light);
+}
+
+.explain-title {
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-vermilion);
+}
+
+.explain-title.shiyi-daxiang { color: var(--color-jade); }
+.explain-title.shiyi-wenyan { color: var(--color-gold); }
+
+.explain-source {
+  font-family: var(--font-serif);
+  font-size: 0.78rem;
+  color: var(--color-ink-light);
+  line-height: 1.5;
+  padding: 8px 10px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+}
+
+.explain-content {
+  font-size: 0.82rem;
+  color: var(--color-ink);
+  line-height: 1.6;
+  padding: 10px 12px;
+  background: rgba(192,57,43,0.04);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(192,57,43,0.12);
+}
+
+.explain-content.shiyi-daxiang {
+  background: var(--color-jade-bg);
+  border-color: rgba(74,124,89,0.15);
+}
+
+.explain-content.shiyi-wenyan {
+  background: rgba(184,134,11,0.04);
+  border-color: rgba(184,134,11,0.12);
+}
+
+.explain-empty {
+  text-align: center;
+  color: var(--color-ink-muted);
+  font-size: 0.78rem;
+  padding: 24px 0;
+}
+
+.explain-empty .empty-icon {
+  font-size: 1.2rem;
+  opacity: 0.25;
+  margin-bottom: 4px;
+}
+
+/* ---- 滚动条 ---- */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 2px; }
+
+/* ---- 动画 ---- */
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.shiyi-panel, .explain-panel { animation: fadeSlide 0.2s ease; }

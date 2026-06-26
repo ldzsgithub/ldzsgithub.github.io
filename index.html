@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>易经六十四卦速查</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 标题 -->
+  <header class="top-bar">
+    <h1>《<span class="book-title">易经</span>》六十四卦速查</h1>
+  </header>
+
+  <!-- 上经 / 下经 -->
+  <nav class="jing-tabs">
+    <button class="jing-tab active" data-jing="upper">上经（1–30）</button>
+    <button class="jing-tab" data-jing="lower">下经（31–64）</button>
+  </nav>
+
+  <!-- 卦象网格 -->
+  <section class="hexagram-grid-wrap">
+    <div class="hexagram-grid" id="hexGrid"></div>
+  </section>
+
+  <!-- 主内容：左 + 中上 + 中下 + 右 -->
+  <section class="main-content" id="hexDisplay"></section>
+
+  <script src="data.js"></script>
+  <script src="shiyi.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
