@@ -151,7 +151,7 @@
         });
       }
     } else if (selectedYao >= 0 && selectedYao < 6) {
-      // 爻选中时：小象传 + (文言传相关)
+      // 爻选中时：小象传 + (仅与该爻相关的文言传段落)
       var xxSel = selectedPassage && selectedPassage.type === "xiaoxiang" && selectedPassage.index === selectedYao ? " selected" : "";
       shiyiHtml +=
         '<div class="shiyi-section' + xxSel + '" data-type="xiaoxiang" data-index="' + selectedYao + '">' +
@@ -159,8 +159,9 @@
           '<div class="shiyi-text">' + shiyi.xiaoxiang[selectedYao].text + "</div>" +
         "</div>";
       if (shiyi.wenyan) {
-        // 文言传中与爻相关的段落
+        // 仅显示 yao 字段匹配当前选中爻的文言传段落
         shiyi.wenyan.forEach(function (w, wi) {
+          if (w.yao !== undefined && w.yao !== selectedYao) return;
           var wSel = selectedPassage && selectedPassage.type === "wenyan" && selectedPassage.index === wi ? " selected shiyi-wenyan" : "";
           shiyiHtml +=
             '<div class="shiyi-section shiyi-wenyan' + wSel + '" data-type="wenyan" data-index="' + wi + '">' +
@@ -170,23 +171,13 @@
         });
       }
     } else if (selectedYao === 6 && hex.extra) {
-      // 用九/用六
+      // 用九/用六：仅显示小象传，不显示文言传（用九/用六无专属文言传段落）
       var xx6Sel = selectedPassage && selectedPassage.type === "xiaoxiang6" ? " selected" : "";
       shiyiHtml +=
         '<div class="shiyi-section' + xx6Sel + '" data-type="xiaoxiang6" data-index="0">' +
           '<div class="shiyi-label">小象传</div>' +
           '<div class="shiyi-text">' + (shiyi.extraXiaoxiang ? shiyi.extraXiaoxiang.text : "无") + "</div>" +
         "</div>";
-      if (shiyi.wenyan) {
-        shiyi.wenyan.forEach(function (w, wi) {
-          var wSel = selectedPassage && selectedPassage.type === "wenyan" && selectedPassage.index === wi ? " selected shiyi-wenyan" : "";
-          shiyiHtml +=
-            '<div class="shiyi-section shiyi-wenyan' + wSel + '" data-type="wenyan" data-index="' + wi + '">' +
-              '<div class="shiyi-label">文言传</div>' +
-              '<div class="shiyi-text">' + w.text + "</div>" +
-            "</div>";
-        });
-      }
     }
 
     // 右栏：解释

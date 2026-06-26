@@ -461,3 +461,210 @@ body {
 }
 
 .shiyi-panel, .explain-panel { animation: fadeSlide 0.2s ease; }
+
+/* ============================================
+   移动端适配 — iPhone 14 Pro (393×852)
+   ============================================ */
+@media (max-width: 480px) {
+  html, body {
+    height: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  body {
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  /* 标题栏更紧凑 */
+  .top-bar {
+    padding: 8px 12px;
+    padding-top: env(safe-area-inset-top, 8px);
+  }
+  .top-bar h1 {
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  /* 上经/下经 */
+  .jing-tabs {
+    padding: 0 12px;
+  }
+  .jing-tab {
+    font-size: 0.75rem;
+    padding: 6px 0;
+  }
+
+  /* 卦象网格：更紧凑 */
+  .hexagram-grid-wrap {
+    padding: 3px 8px 4px;
+  }
+  .hexagram-grid {
+    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    gap: 2px;
+  }
+  .hex-btn {
+    padding: 3px 1px 2px;
+  }
+  .hex-btn .hex-num {
+    font-size: 0.42rem;
+  }
+  .hex-btn .hex-name {
+    font-size: 0.72rem;
+  }
+
+  /* 主内容区：允许滚动 */
+  .main-content {
+    flex: none;
+    overflow: visible;
+    padding: 6px 8px;
+  }
+
+  /* 四栏 → 垂直堆叠 */
+  .hex-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    height: auto;
+    padding: 8px;
+    border-radius: var(--radius);
+  }
+
+  /* 左栏：横向排列 卦象+爻线 */
+  .hex-visual {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    border-right: none;
+    border-bottom: 1px solid var(--border-light);
+    padding: 6px 8px;
+  }
+
+  .hex-symbol-area {
+    padding: 2px 6px;
+    gap: 0;
+    flex-shrink: 0;
+  }
+  .hex-unicode {
+    font-size: 1.6rem;
+  }
+  .hex-name-large {
+    font-size: 0.85rem;
+  }
+  .hex-fullname {
+    font-size: 0.55rem;
+  }
+  .hex-meta-inline {
+    font-size: 0.5rem;
+  }
+
+  /* 爻线：缩小，横向 */
+  .yao-container {
+    flex: 1;
+    gap: 2px;
+    padding: 4px 2px;
+  }
+  .yao-line {
+    padding: 2px 3px;
+    gap: 4px;
+  }
+  .yao-line .yao-label {
+    font-size: 0.6rem;
+    min-width: 20px;
+  }
+  .yao-line .yao-bar .bar {
+    height: 5px;
+  }
+
+  :root {
+    --yao-total-w: 70px;
+    --yao-gap: 7px;
+  }
+
+  .yao-extra-sep {
+    margin: 1px 4px;
+  }
+
+  /* 中上：辞 */
+  .content-panel {
+    grid-column: auto;
+    grid-row: auto;
+    padding: 4px 8px;
+    border-bottom: 1px solid var(--border-light);
+    overflow-y: visible;
+  }
+  .content-title {
+    font-size: 0.78rem;
+  }
+  .content-text {
+    font-size: 0.78rem;
+    padding: 6px 8px;
+    line-height: 1.5;
+  }
+
+  /* 中下：十翼 */
+  .shiyi-panel {
+    grid-column: auto;
+    grid-row: auto;
+    padding: 4px 8px;
+    overflow-y: visible;
+  }
+  .shiyi-section {
+    padding: 5px 6px;
+  }
+  .shiyi-section .shiyi-label {
+    font-size: 0.52rem;
+  }
+  .shiyi-section .shiyi-text {
+    font-size: 0.72rem;
+    line-height: 1.4;
+  }
+
+  /* 右栏：解释 */
+  .explain-panel {
+    grid-column: auto;
+    grid-row: auto;
+    padding: 6px 8px;
+    overflow-y: visible;
+    border-left: none;
+    border-top: 1px solid var(--border-light);
+  }
+  .explain-title {
+    font-size: 0.78rem;
+  }
+  .explain-source {
+    font-size: 0.72rem;
+    padding: 6px 8px;
+    line-height: 1.4;
+  }
+  .explain-content {
+    font-size: 0.75rem;
+    padding: 8px 10px;
+    line-height: 1.5;
+  }
+  .explain-empty {
+    padding: 12px 0;
+    font-size: 0.72rem;
+  }
+
+  /* 滚动条隐藏 */
+  ::-webkit-scrollbar { width: 0; height: 0; }
+}
+
+/* ============================================
+   平板适配 (481–768px)
+   ============================================ */
+@media (min-width: 481px) and (max-width: 768px) {
+  .hex-detail {
+    grid-template-columns: 140px minmax(140px, 1fr) minmax(160px, 1fr) minmax(140px, 1fr);
+  }
+  :root {
+    --yao-total-w: 80px;
+    --yao-gap: 8px;
+  }
+  .hex-unicode { font-size: 1.6rem; }
+  .hex-name-large { font-size: 0.9rem; }
+  .hex-btn .hex-name { font-size: 0.75rem; }
+}
