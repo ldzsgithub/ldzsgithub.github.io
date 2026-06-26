@@ -141,7 +141,9 @@
           '<div class="shiyi-text">' + hex.daxiang + "</div>" +
         "</div>";
       if (shiyi.wenyan) {
+        // 卦选中时仅显示总论性质的文言传段落（yao === -1）
         shiyi.wenyan.forEach(function (w, wi) {
+          if (w.yao !== undefined && w.yao !== -1) return;
           var wSel = selectedPassage && selectedPassage.type === "wenyan" && selectedPassage.index === wi ? " selected shiyi-wenyan" : "";
           shiyiHtml +=
             '<div class="shiyi-section shiyi-wenyan' + wSel + '" data-type="wenyan" data-index="' + wi + '">' +
